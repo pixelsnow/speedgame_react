@@ -1,38 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap");
+
 .App {
+  margin-top: 2rem;
+  max-width: 800px;
   text-align: center;
+  font-family: "Major Mono Display", monospace;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1 {
+  margin-bottom: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.game-score {
+  background-color: antiquewhite;
+  margin: 2rem 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.game-score .circle-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.start-btn,
+.end-btn {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.5rem 1rem;
+  background-color: black;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin: 2rem 0;
 }
