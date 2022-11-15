@@ -2,6 +2,9 @@ import "./App.css";
 import { Component } from "react";
 import Circle from "./Circle";
 import Modal from "./Modal";
+/* import click from "./assets/sounds/click.wav";
+
+let clickSound = new Audio(click); */
 
 const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -18,6 +21,7 @@ class App extends Component {
     modalActive: false,
     current: undefined,
     pace: 1000,
+    correctClicked: false,
   };
 
   timer;
@@ -44,8 +48,7 @@ class App extends Component {
   };
 
   resetGame = () => {
-    this.setState({ current: undefined });
-    this.setState({ lives: 3 });
+    this.setState({ current: undefined, lives: 3, score: 0, pace: 1000 });
   };
 
   componentDidMount() {
@@ -55,14 +58,25 @@ class App extends Component {
     this.setState({ circles: res });
   }
 
+  /* clickPlay = () => {
+    if (clickSound.paused) {
+      clickSound.play();
+    } else {
+      clickSound.currentTime = 0;
+    }
+  }; */
+
   clickCircle = (key) => {
+    if (!this.state.endButtonActive) return;
+    /* this.clickPlay(); */
     console.log("circle ", key, " clicked");
     if (key !== this.state.current) {
       this.setState({ lives: this.state.lives - 1 });
     } else {
       this.setState({
         score: this.state.score + 1,
-        lives: this.state.lives + 1,
+        correctClicked: true,
+        /* lives: this.state.lives + 1, */
       });
     }
   };
@@ -79,6 +93,7 @@ class App extends Component {
     this.setState({
       current: nextActive,
       pace: this.state.pace - 20,
+      // TODO: handle lives with clickedCorrect state
       lives: this.state.lives - 1,
     });
     console.log(nextActive);
