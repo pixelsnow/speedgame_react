@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap");
 
 .App {
-  margin-top: 2rem;
+  margin-top: 4rem;
   max-width: 800px;
   text-align: center;
   font-family: "Major Mono Display", monospace;
@@ -11,12 +11,15 @@ h1 {
   margin-bottom: 2rem;
 }
 
-.game-score {
-  background-color: antiquewhite;
+.game-info-bar {
   margin: 2rem 0;
+  display: flex;
+  justify-content: space-between;
 }
-
-.game-score .circle-container {
+.game-score {
+  /* background-color: antiquewhite; */
+}
+.circle-container {
   display: flex;
   justify-content: space-between;
   gap: 2rem;

@@ -6,6 +6,7 @@ import Modal from "./Modal";
 class App extends Component {
   state = {
     score: 0,
+    lives: 3,
     circlesNum: 4,
     circles: [],
     startButtonActive: true,
@@ -31,29 +32,36 @@ class App extends Component {
     this.setState({ modalActive: true });
   };
 
-  fillCircleArray = () => {
+  componentDidMount() {
     let res = [];
     for (let i = 0; i < this.state.circlesNum; i++)
       res.push({ id: i, active: false });
-    console.log(res);
+    console.log(`circles array set to: ${res}`);
     this.setState({ circles: res });
-  };
+  }
 
   clickCircle = (key) => {
     console.log("circle ", key, " clicked");
+    this.setState({ score: this.state.score + 1 });
   };
 
   render() {
-    /* this.fillCircleArray(); THIS CRASHES THINGS */
-
     const circles = this.state.circles.map((circle) => (
-      <Circle key={circle.id} onClick={() => this.clickCircle(circle.id)} />
+      <Circle
+        key={circle.id}
+        id={circle.id}
+        clickHandler={() => this.clickCircle(circle.id)}
+      />
     ));
 
     return (
       <div className="App">
         <h1>SPEEDGAME</h1>
-        <p className="game-score">Score: {this.state.score}</p>
+        <div className="game-info-bar">
+          <p className="game-score">score: {this.state.score}</p>
+          <p className="lives">♥ ♥ ♥</p>
+        </div>
+
         <div className="circle-container">{circles}</div>
         {this.state.startButtonActive && (
           <button className="start-btn" onClick={this.startGame}>
@@ -62,7 +70,7 @@ class App extends Component {
         )}
         {this.state.endButtonActive && (
           <button className="end-btn" onClick={this.endGame}>
-            Stop playing
+            stop playing
           </button>
         )}
         {this.state.modalActive && (
