@@ -1,5 +1,5 @@
 .Circle {
-  background-color: lightpink;
+  background-color: antiquewhite;
   height: 100px;
   width: 100px;
   border-radius: 50%;
@@ -9,5 +9,6 @@
   cursor: pointer;
 }
 
-.Circle:hover {
+.Circle.active {
+  background-color: lightpink;
 }
