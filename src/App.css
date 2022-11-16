@@ -34,4 +34,5 @@ h1 {
   background-color: black;
   color: white;
   margin: 2rem 0;
+  cursor: pointer;
 }

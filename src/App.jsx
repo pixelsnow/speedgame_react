@@ -92,38 +92,25 @@ class App extends Component {
   nextCircle = () => {
     // Checking if the correct circle wasn't clicked and we should reduce lives
     if (!this.state.correctClicked) {
-      console.log(
-        `not clicked correct, reducing lives to ${this.state.lives - 1}`
-      );
       this.setState({ lives: this.state.lives - 1 });
       if (this.state.lives <= 1) {
         this.endGame();
         return;
       }
     }
-    // Get the next circle
+    // Pick the next circle
     let nextActive;
     do {
       nextActive = getRandomInt(0, this.state.circlesNum - 1);
     } while (nextActive === this.state.current);
-    //
+    // Set the next circle and increase the pace
     this.setState({
       current: nextActive,
       pace: this.state.pace - 20,
     });
-    if (!this.state.correctClicked) {
-      console.log(
-        `not clicked correct, reducing lives to ${this.state.lives - 1}`
-      );
-      this.setState({ lives: this.state.lives - 1 });
-      if (this.state.lives <= 1) {
-        this.endGame();
-        return;
-      }
-    }
-    console.log(`current: ${nextActive}`);
+    // Reset the correctClicked indicator
     this.setState({ correctClicked: false });
-    console.log("correctClicked set to false");
+    // Set timeout
     this.timer = setTimeout(
       this.nextCircle,
       this.state.pace,
@@ -146,7 +133,7 @@ class App extends Component {
         <h1>SPEEDGAME</h1>
         <div className="game-info-bar">
           <p className="game-score">score: {this.state.score}</p>
-          <p className="lives">♥{this.state.lives}</p>
+          <p className="lives">♥ {this.state.lives}</p>
         </div>
 
         <div className="circle-container">{circles}</div>
