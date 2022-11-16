@@ -19,6 +19,13 @@ h1 {
 .game-score {
   /* background-color: antiquewhite; */
 }
+
+.lives {
+  display: flex;
+  gap: 0.7rem;
+  font-size: 1.2rem;
+}
+
 .circle-container {
   display: flex;
   justify-content: space-between;
