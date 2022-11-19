@@ -1,5 +1,5 @@
 .Circle {
-  background-color: antiquewhite;
+  background-color: white;
   height: 100px;
   width: 100px;
   border-radius: 50%;
@@ -11,4 +11,24 @@
 
 .Circle.active {
   background-color: lightpink;
+}
+
+.Circle:nth-child(1).active {
+  background: url("assets/img/flies.jpg");
+  background-size: contain;
+}
+
+.Circle:nth-child(2).active {
+  background: url("assets/img/silverfish.jpg");
+  background-size: contain;
+}
+
+.Circle:nth-child(3).active {
+  background: url("assets/img/fly.jpg");
+  background-size: contain;
+}
+
+.Circle:nth-child(4).active {
+  background: url("assets/img/roach.jpg");
+  background-size: contain;
 }

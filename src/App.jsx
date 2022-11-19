@@ -11,7 +11,7 @@ import crack3 from "./assets/sounds/slime_cut.mp3";
 import spook from "./assets/sounds/spook2.mp3";
 
 let clickSound = new Audio(click);
-let crackSound;
+let crackSound = undefined;
 let crackSound0 = new Audio(crack0);
 let crackSound1 = new Audio(crack1);
 let crackSound2 = new Audio(crack2);
@@ -58,11 +58,12 @@ class App extends Component {
 
   startGame = () => {
     this.toggleButtons();
+    clickSound.play();
     this.nextCircle();
   };
 
   endGame = () => {
-    if (!crackSound.paused) crackSound.pause();
+    if (crackSound && !crackSound.paused) crackSound.pause();
     if (!clickSound.paused) clickSound.pause();
     gameOver.play();
     this.toggleButtons();
@@ -81,14 +82,6 @@ class App extends Component {
     this.setState({ circles: res });
     this.initLivesArray();
   }
-
-  clickPlay = () => {
-    if (clickSound.paused) {
-      clickSound.play();
-    } else {
-      clickSound.currentTime = 0;
-    }
-  };
 
   clickCircle = (key) => {
     switch (key) {
@@ -117,7 +110,6 @@ class App extends Component {
     }
     // If game is not in progress, don't do anything
     if (!this.state.gameInProgress) return;
-    this.clickPlay();
     // If the wrong circle was clicked, end the game
     if (key !== this.state.current) {
       this.endGame();
