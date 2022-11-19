@@ -35,6 +35,7 @@ class App extends Component {
     current: undefined,
     pace: 1000,
     correctClicked: true,
+    gameOverMessage: "",
   };
 
   timer;
@@ -62,11 +63,26 @@ class App extends Component {
     this.nextCircle();
   };
 
+  setGameOverMessage = () => {
+    if (this.state.score < 5) {
+      this.setState({ gameOverMessage: "didn't even try did ya" });
+    } else if (this.state.score < 25) {
+      this.setState({ gameOverMessage: "you tried." });
+    } else if (this.state.score < 50) {
+      this.setState({
+        gameOverMessage: "we got a professional exterminator in the house, huh",
+      });
+    } else {
+      this.setState({ gameOverMessage: "hello bot" });
+    }
+  };
+
   endGame = () => {
     if (crackSound && !crackSound.paused) crackSound.pause();
     if (!clickSound.paused) clickSound.pause();
     gameOver.play();
     this.toggleButtons();
+    this.setGameOverMessage();
     this.setState({ modalActive: true });
     clearTimeout(this.timer);
   };
@@ -187,7 +203,11 @@ class App extends Component {
           </button>
         )}
         {this.state.modalActive && (
-          <Modal score={this.state.score} closeModal={this.closeModal} />
+          <Modal
+            score={this.state.score}
+            closeModal={this.closeModal}
+            message={this.state.gameOverMessage}
+          />
         )}
       </div>
     );
