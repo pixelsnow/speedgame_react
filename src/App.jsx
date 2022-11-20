@@ -36,6 +36,11 @@ class App extends Component {
     pace: 1000,
     correctClicked: true,
     gameOverMessage: "",
+    gameOverSubmessage: "",
+    soundOn:
+      localStorage.getItem("soundOn") === null
+        ? true
+        : JSON.parse(localStorage.getItem("soundOn")),
   };
 
   timer;
@@ -45,6 +50,14 @@ class App extends Component {
     let lives = [];
     for (let i = 0; i < this.state.lives; i++) lives.push(i);
     this.setState({ livesArray: lives });
+  };
+
+  toggleSound = (soundOn) => {
+    console.log("before: ", this.state.soundOn);
+    this.setState({ soundOn: !soundOn });
+    console.log("after: ", this.state.soundOn);
+    localStorage.setItem("soundOn", !soundOn);
+    console.log("local: ", localStorage.getItem("soundOn"));
   };
 
   closeModal = () => {
@@ -59,18 +72,27 @@ class App extends Component {
 
   startGame = () => {
     this.toggleButtons();
-    clickSound.play();
+    if (this.state.soundOn) clickSound.play();
     this.nextCircle();
   };
 
   setGameOverMessage = () => {
     if (this.state.score < 5) {
       this.setState({ gameOverMessage: "didn't even try did ya" });
+      this.setState({
+        gameOverSubmessage: "your house has been taken over by crawlies",
+      });
     } else if (this.state.score < 25) {
       this.setState({ gameOverMessage: "you tried." });
+      this.setState({
+        gameOverSubmessage: `your house is clear for now`,
+      });
     } else if (this.state.score < 50) {
       this.setState({
         gameOverMessage: "we got a professional exterminator in the house, huh",
+      });
+      this.setState({
+        gameOverSubmessage: "GOT THEM",
       });
     } else {
       this.setState({ gameOverMessage: "hello bot" });
@@ -78,9 +100,7 @@ class App extends Component {
   };
 
   endGame = () => {
-    if (crackSound && !crackSound.paused) crackSound.pause();
-    if (!clickSound.paused) clickSound.pause();
-    gameOver.play();
+    if (this.state.soundOn) gameOver.play();
     this.toggleButtons();
     this.setGameOverMessage();
     this.setState({ modalActive: true });
@@ -93,13 +113,18 @@ class App extends Component {
 
   // On page load, init circles array and lives array
   componentDidMount() {
+    if (localStorage.getItem("soundOn"))
+      this.setState({ soundOn: JSON.parse(localStorage.getItem("soundOn")) });
+    else localStorage.setItem("soundOn", true);
+    console.log(`set: ${this.state.soundOn}`);
+    console.log(`localstorage item: ${localStorage.getItem("soundOn")}`);
     let res = [];
     for (let i = 0; i < this.state.circlesNum; i++) res.push(i);
     this.setState({ circles: res });
     this.initLivesArray();
   }
 
-  clickCircle = (key) => {
+  playCrackSound = (key) => {
     switch (key) {
       case 0: {
         crackSound = crackSound0;
@@ -119,13 +144,19 @@ class App extends Component {
       }
       default:
     }
+    crackSound.play();
     if (crackSound.paused) {
       crackSound.play();
     } else {
       crackSound.currentTime = 0;
     }
-    // If game is not in progress, don't do anything
-    if (!this.state.gameInProgress) return;
+  };
+
+  clickCircle = (key) => {
+    // If game hasn't started yet or the correct circle has been clicked already, do nothing
+    if (!this.state.gameInProgress || this.state.correctClicked) return;
+    // Pick the sound effect and play it
+    if (this.state.soundOn) this.playCrackSound(key);
     // If the wrong circle was clicked, end the game
     if (key !== this.state.current) {
       this.endGame();
@@ -186,8 +217,22 @@ class App extends Component {
     return (
       <div className="App">
         <h1>SPEEDGAME</h1>
+        <div
+          className="mute-btn"
+          onClick={() => this.toggleSound(this.state.soundOn)}
+        >
+          {!this.state.soundOn && (
+            <span className="material-symbols-outlined">volume_off</span>
+          )}
+          {this.state.soundOn && (
+            <span className="material-symbols-outlined">volume_up</span>
+          )}
+        </div>
         <div className="game-info-bar">
-          <p className="game-score">score: {this.state.score}</p>
+          <p className="game-score">
+            <em>Got crawlies:</em>
+            <span>{this.state.score}</span>
+          </p>
           <p className="lives">{lives}</p>
         </div>
 
@@ -207,6 +252,7 @@ class App extends Component {
             score={this.state.score}
             closeModal={this.closeModal}
             message={this.state.gameOverMessage}
+            submessage={this.state.gameOverSubmessage}
           />
         )}
       </div>

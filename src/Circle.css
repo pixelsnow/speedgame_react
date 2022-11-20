@@ -1,16 +1,15 @@
 .Circle {
   background-color: white;
-  height: 100px;
-  width: 100px;
+  height: 170px;
+  width: 170px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-}
-
-.Circle.active {
-  background-color: lightpink;
+  box-shadow: 5px black;
+  box-shadow: 2px 5px 3px rgba(0, 0, 0, 0.14), -3px 3px 1px rgba(0, 0, 0, 0.211),
+    1px 2px rgba(0, 0, 0, 0.248);
 }
 
 .Circle:nth-child(1).active {
