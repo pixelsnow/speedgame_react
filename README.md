@@ -5,6 +5,7 @@
 ## About the project
 
 Created in November 2022 as a part of React course by [@margittennosaar](https://www.github.com/margittennosaar)
+![Screenshot](screenshot.png)
 
 ## How to play
 
