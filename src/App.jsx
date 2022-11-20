@@ -53,11 +53,8 @@ class App extends Component {
   };
 
   toggleSound = (soundOn) => {
-    console.log("before: ", this.state.soundOn);
     this.setState({ soundOn: !soundOn });
-    console.log("after: ", this.state.soundOn);
     localStorage.setItem("soundOn", !soundOn);
-    console.log("local: ", localStorage.getItem("soundOn"));
   };
 
   closeModal = () => {
@@ -113,11 +110,6 @@ class App extends Component {
 
   // On page load, init circles array and lives array
   componentDidMount() {
-    if (localStorage.getItem("soundOn"))
-      this.setState({ soundOn: JSON.parse(localStorage.getItem("soundOn")) });
-    else localStorage.setItem("soundOn", true);
-    console.log(`set: ${this.state.soundOn}`);
-    console.log(`localstorage item: ${localStorage.getItem("soundOn")}`);
     let res = [];
     for (let i = 0; i < this.state.circlesNum; i++) res.push(i);
     this.setState({ circles: res });
@@ -170,7 +162,7 @@ class App extends Component {
   };
 
   nextCircle = () => {
-    console.log(`pace: ${this.state.pace}`);
+    console.log(`pace: ${this.state.pace}ms`);
     // Checking if the correct circle wasn't clicked and we should reduce lives
     if (!this.state.correctClicked) {
       this.setState({
