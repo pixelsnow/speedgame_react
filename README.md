@@ -4,8 +4,8 @@
 
 ## About the project
 
-Created in November 2022 as a part of React course by [@margittennosaar](https://www.github.com/margittennosaar)
 ![Screenshot](speedgame.png)
+Created in November 2022 as a part of React course by [@margittennosaar](https://www.github.com/margittennosaar)
 
 ## How to play
 
